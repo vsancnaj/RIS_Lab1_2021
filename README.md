@@ -1,4 +1,3 @@
-# 🤖RIS Lab 2021 Report🤖
-_By: @vsancnaj | Yassine | Yasar_
+# 🤖RIS Lab 2021 🤖
+_By: @vsancnaj | @yassine-aitaouicha| Yasar_
 
-## Task 1
