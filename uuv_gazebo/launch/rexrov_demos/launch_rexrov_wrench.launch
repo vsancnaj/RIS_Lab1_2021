@@ -1,0 +1,17 @@
+<launch>
+ 
+   <include file="$(find uuv_gazebo_worlds)/launch/empty_underwater_world.launch"/>
+   <!-- the first line launches the gazebo world-->
+ 
+   <include file="$(find uuv_gazebo)/launch/rexrov_demos/rexrov_wrench_control.launch" />
+   <!-- the second line spawans the robot in the world launched with gazebo-->
+ 
+   <include file="$(find uuv_gazebo)/launch/rexrov_demos/launch_wrench_control.launch" />
+   <!-- this line launches the control node that is similar to teleop_twist_keyboard-->
+ 
+   <!-- For all the files, we used the include tab that allowed us to run several
+        launch files from one file. In this case, this file runs 3 launch files, that
+        run a gazebo world, launch an ROV, and a control node to control it-->
+ 
+ 
+</launch>

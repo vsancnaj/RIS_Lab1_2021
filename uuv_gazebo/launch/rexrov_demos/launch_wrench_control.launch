@@ -1,0 +1,6 @@
+<launch>
+ 
+   <node pkg="uuv_gazebo" type="teleop_wrench_keyboard.py" name="teleop" output="screen"/> 
+   <!-- this node launches the teleop node similar to teleop_twist_keyboard-->
+ 
+</launch>

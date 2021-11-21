@@ -1,0 +1,17 @@
+<launch>
+   <include file="$(find uuv_gazebo_worlds)/launch/empty_underwater_world.launch"/>
+   <!-- this line launches the gazebo software in the empty underwater world-->
+ 
+   <include file="$(find uuv_gazebo)/launch/rexrov_demos/rexrov_default.launch"/> 
+   <!-- this line launches the rexrov in the world defined above-->
+ 
+   <node pkg="teleop_twist_keyboard" type="teleop_twist_keyboard.py" name="teleop">
+       <remap from="cmd_vel" to="rexrov/cmd_vel"/>
+   </node>
+   <!-- this line launches the node teleop_twist_keyboard that allows us to control
+        the ROV using the keyboard.
+        In order to be able to use this node on the ROV, we need to remap the topic
+        to which the node publishes to the one that the ROV subscribes to. This is
+        done in the remap tab-->
+ 
+</launch>
