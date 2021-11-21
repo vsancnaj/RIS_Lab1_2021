@@ -1,0 +1,15 @@
+<launch>
+  <arg name="model" />
+  <param name="robot description" commands="$(find xacro)/xacro --inorder '$(find rov)/urdf/rov_base.urdf'" />
+  <!-- send fake joint values -->
+  <node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui">
+  	<param name="use_gui" value="True"/>
+  </node>
+  
+  <!-- Combine joint values -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
+  
+  <!-- Show in Rviz -->
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find ROV)/launch/test_config.rviz"/>
+
+</launch>
