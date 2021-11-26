@@ -1,0 +1,110 @@
+<?xml version="1.0" ?>
+<robot name="robot_rov" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <material name="orange">
+        <color rgba="1.0 0.423529411765 0.0392156862745 1.0"/>
+    </material>
+  
+    <gazebo reference="base_link">
+        <material>Gazebo/Orange</material>
+    </gazebo>
+    
+    
+
+  
+    <link name="base_link">
+    <inertial>
+      <mass value="0.2"/>
+      <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
+      <inertia ixx="0.000526666666667" ixy="0" ixz="0" iyy="0.000526666666667" iyz="0" izz="0.001"/>
+    </inertial>
+    <collision name="base_link_collision">
+      <origin rpy="0 1.5707 1.5707" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.04" radius="0.1"/>
+      </geometry>
+    </collision>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <box size="3 2 1"/>
+            </geometry>
+        </visual>
+        
+    </link>
+    <!-- joint that connects base_link to link_01 -->
+    <joint name="base_link_link_01" type="revolute">
+        <axis xyz="0 0 1" />
+        <limit effort="1000.0" lower="-3.14" upper="3.14" velocity="0.5" />
+        <origin rpy="0 0 0" xyz="1.5 0.0 0.7"/>
+        <parent link="base_link"/>
+        <child link="Control_01"/>
+    </joint>
+    
+    <link name="Control_01">
+        <visual>
+            <geometry>
+                    <sphere radius="0.45"/>
+            </geometry>
+        <material name="orange"/>
+        </visual>
+        <collision>
+            <geometry>
+                <sphere radius="0.45"/>
+        </geometry>
+        </collision>
+        <gazebo reference="Control_01">
+            <material>Gazebo/Blue</material>
+        </gazebo>
+        <inertial>
+            <mass value="1"/>
+            <inertia ixx="0.000526666666667" ixy="0" ixz="0" iyy="0.000526666666667" iyz="0" izz="0.001"/>
+        </inertial>
+    </link>
+    <joint name= "Control_Module" type="fixed">
+        <parent link="base_link"/>
+        <child link="Control_01"/>
+        <origin xyz="0.5 0.0 0.0"/>
+    </joint> 
+    <xacro:macro name="thruster" params="suffix copy_x copy_y copy_z rot_x rot_y rot_z">
+        <link name="thruster_${suffix}">
+            <visual>
+                <geometry>
+                <cylinder radius="0.2" length="0.35"/>    
+                </geometry>
+                <material name="orange"/>
+            </visual>
+            <collision>
+                <geometry>
+                <cylinder radius="0.2" length="0.35"/>    
+                </geometry>
+            </collision>
+            <inertial>
+                <mass value="0.5"/>
+                <inertia ixx="0.000526666666667" ixy="0" ixz="0" iyy="0.000526666666667" iyz="0" izz="0.001"/>
+            </inertial>
+        </link>
+        <gazebo reference="thruster_${suffix}">
+            <material>Gazebo/Red</material>
+        </gazebo>
+        <joint name="contact_2_thruster_${suffix}" type="prismatic">
+             <parent link="base_link"/>
+                <child link="thruster_${suffix}"/>
+                 <limit effort="1000.0" lower="-0.38" upper="0" velocity="0.5"/>
+                    <origin rpy="${rot_x} ${rot_y} ${rot_z}" xyz="${copy_x} ${copy_y} ${copy_z}"/>
+        </joint>
+
+    </xacro:macro>
+    <xacro:thruster suffix="a" copy_x="-1.6" copy_y="0" copy_z="0" rot_x="0" rot_y="1.5757" rot_z="0"/>
+    <xacro:thruster suffix="b" copy_x="-1.6" copy_y="-0.5" copy_z="0" rot_x="0" rot_y="1.5757" rot_z="0"/>
+    <xacro:thruster suffix="c" copy_x="-1.6" copy_y="0.5" copy_z="0" rot_x="0" rot_y="1.5757" rot_z="0"/>
+    <xacro:thruster suffix="d" copy_x="0" copy_y="1.1" copy_z="0" rot_x="1.5757" rot_y="0" rot_z="0"/>
+    <xacro:thruster suffix="e" copy_x="0" copy_y="-1.1" copy_z="0" rot_x="1.5757" rot_y="0" rot_z="0"/>
+    <xacro:thruster suffix="f" copy_x="0" copy_y="0" copy_z="-0.6" rot_x="0" rot_y="0" rot_z="0"/>
+
+<gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+    <robotNamespace>/</robotNamespace>
+    </plugin>
+</gazebo>
+</robot>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+
+    <include file="$(find uuv_gazebo_worlds)/launch/empty_underwater_world.launch">
+     </include>
+    <param name="robot_description" command="cat '$(find simulation)/urdf/test.urdf'" />
+    
+    <node name="mybot_spawn" pkg="gazebo_ros" type="spawn_model" output="screen"
+          args="-urdf -param robot_description -model robot_rov" />      
+          
+</launch>
