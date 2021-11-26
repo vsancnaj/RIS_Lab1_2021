@@ -15,7 +15,7 @@ Located in uuv_gazebo as the following files
 3. /launch/rexrov_demos ->  _launch_rexrov_wrench.launch_
 
 ## Task 4
-Located in \rov folder
+Located in \simulation folder
 
 \\
 
